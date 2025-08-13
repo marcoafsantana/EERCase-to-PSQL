@@ -1,0 +1,160 @@
+{
+  "id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+  "title": "Exemplo de Projeto EER",
+  "owner": "usuario@exemplo.com",
+  "specialization_links": [
+    {
+      "id": 1,
+      "flow_id": "flow1",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 101,
+      "target_id": 201,
+      "source_handle": "bottom",
+      "target_handle": "top",
+      "role": "Especializacao",
+      "type": 0
+    }
+  ],
+  "generalization_links": [
+    {
+      "id": 2,
+      "flow_id": "flow2",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 102,
+      "target_id": 201,
+      "source_handle": "bottom",
+      "target_handle": "top",
+      "role": "Generalizacao",
+      "completeness": 1,
+      "type": 1
+    }
+  ],
+  "direct_inheritance_links": [
+    {
+      "id": 3,
+      "flow_id": "flow3",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 201,
+      "target_id": 301,
+      "source_handle": "bottom",
+      "target_handle": "top",
+      "role": "Heranca Direta"
+    }
+  ],
+  "relationship_links": [
+    {
+      "id": 4,
+      "flow_id": "flow4",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 301,
+      "target_id": 401,
+      "source_handle": "right",
+      "target_handle": "left",
+      "role": "Trabalha",
+      "participation": 1,
+      "cardinality": 0,
+      "is_identifier": true,
+      "chosen_link": false
+    }
+  ],
+  "attribute_links": [
+    {
+      "id": 5,
+      "flow_id": "flow5",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 301,
+      "target_id": 501,
+      "source_handle": "right",
+      "target_handle": "left"
+    }
+  ],
+  "inheritances": [
+    {
+      "id": 201,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 300,
+      "width": 100,
+      "height": 60,
+      "label": "Tipo de Pessoa",
+      "disjointness": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": 101,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 150,
+      "width": 120,
+      "height": 60,
+      "label": "Pessoa Física"
+    },
+    {
+      "id": 102,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 450,
+      "width": 120,
+      "height": 60,
+      "label": "Pessoa Jurídica"
+    }
+  ],
+  "entities": [
+    {
+      "id": 301,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 200,
+      "posistion_y": 300,
+      "width": 120,
+      "height": 60,
+      "name": "Funcionário",
+      "is_weak": false
+    }
+  ],
+  "attributes": [
+    {
+      "id": 501,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 50,
+      "posistion_y": 300,
+      "width": 100,
+      "height": 40,
+      "name": "CPF",
+      "type": 3,
+      "data_type": 0,
+      "size": 11,
+      "is_null": false,
+      "is_unique": true,
+      "check": "LENGTH(cpf) = 11",
+      "default_value": "",
+      "comment": "Número do CPF do funcionário",
+      "cardinality": 0
+    }
+  ],
+  "relationships": [
+    {
+      "id": 401,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 600,
+      "posistion_y": 300,
+      "width": 120,
+      "height": 60,
+      "name": "Departamento",
+      "is_identifier": false
+    }
+  ],
+  "associative_entities": [
+    {
+      "id": 601,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 800,
+      "posistion_y": 300,
+      "width": 140,
+      "height": 70,
+      "name": "Projeto",
+      "is_weak": false,
+      "relationship_id": 401
+    }
+  ]
+}
