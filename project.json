@@ -155,146 +155,6 @@
       "chosen_link": false
     }
   ],
-  "attribute_links": [
-    {
-      "id": 12,
-      "flow_id": "flow12",
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "source_id": 301,
-      "target_id": 501,
-      "source_handle": "top",
-      "target_handle": "bottom"
-    },
-    {
-      "id": 13,
-      "flow_id": "flow13",
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "source_id": 301,
-      "target_id": 502,
-      "source_handle": "top",
-      "target_handle": "bottom"
-    },
-    {
-      "id": 14,
-      "flow_id": "flow14",
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "source_id": 301,
-      "target_id": 503,
-      "source_handle": "top",
-      "target_handle": "bottom"
-    },
-    {
-      "id": 15,
-      "flow_id": "flow15",
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "source_id": 302,
-      "target_id": 504,
-      "source_handle": "top",
-      "target_handle": "bottom"
-    },
-    {
-      "id": 16,
-      "flow_id": "flow16",
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "source_id": 302,
-      "target_id": 505,
-      "source_handle": "top",
-      "target_handle": "bottom"
-    },
-    {
-      "id": 17,
-      "flow_id": "flow17",
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "source_id": 303,
-      "target_id": 506,
-      "source_handle": "top",
-      "target_handle": "bottom"
-    }
-  ],
-  "inheritances": [
-    {
-      "id": 201,
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "posistion_x": 400,
-      "posistion_y": 300,
-      "width": 100,
-      "height": 60,
-      "label": "Tipo de Pessoa",
-      "disjointness": 1
-    }
-  ],
-  "categories": [
-    {
-      "id": 101,
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "posistion_x": 400,
-      "posistion_y": 150,
-      "width": 120,
-      "height": 60,
-      "label": "Pessoa Física"
-    },
-    {
-      "id": 102,
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "posistion_x": 400,
-      "posistion_y": 450,
-      "width": 120,
-      "height": 60,
-      "label": "Pessoa Jurídica"
-    }
-  ],
-  "entities": [
-    {
-      "id": 301,
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "posistion_x": 200,
-      "posistion_y": 200,
-      "width": 120,
-      "height": 60,
-      "name": "Livro",
-      "is_weak": false
-    },
-    {
-      "id": 302,
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "posistion_x": 400,
-      "posistion_y": 200,
-      "width": 120,
-      "height": 60,
-      "name": "Usuario",
-      "is_weak": false
-    },
-    {
-      "id": 303,
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "posistion_x": 600,
-      "posistion_y": 200,
-      "width": 120,
-      "height": 60,
-      "name": "Exemplar",
-      "is_weak": true
-    },
-    {
-      "id": 304,
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "posistion_x": 200,
-      "posistion_y": 400,
-      "width": 120,
-      "height": 60,
-      "name": "Autor",
-      "is_weak": false
-    },
-    {
-      "id": 305,
-      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
-      "posistion_x": 400,
-      "posistion_y": 400,
-      "width": 120,
-      "height": 60,
-      "name": "Editora",
-      "is_weak": false
-    }
-  ],
   "attributes": [
     {
       "id": 501,
@@ -400,6 +260,564 @@
       "default_value": "",
       "comment": "Número de tombo do exemplar",
       "cardinality": 0
+    },
+    {
+      "id": 507,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 150,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Edicao",
+      "type": 0,
+      "data_type": 4,
+      "size": 4,
+      "is_null": true,
+      "is_unique": false,
+      "default_value": "1",
+      "comment": "Número da edição do livro",
+      "cardinality": 0
+    },
+    {
+      "id": 508,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 200,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Generos",
+      "type": 0,
+      "data_type": 0,
+      "size": 100,
+      "is_null": true,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Gêneros do livro",
+      "cardinality": 2
+    },
+    {
+      "id": 509,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 250,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Nome",
+      "type": 0,
+      "data_type": 0,
+      "size": 255,
+      "is_null": false,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Nome do usuário",
+      "cardinality": 0
+    },
+    {
+      "id": 510,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 300,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "DataNascimento",
+      "type": 0,
+      "data_type": 5,
+      "size": 0,
+      "is_null": true,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Data de nascimento do usuário",
+      "cardinality": 0
+    },
+    {
+      "id": 511,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 350,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Telefones",
+      "type": 0,
+      "data_type": 0,
+      "size": 15,
+      "is_null": true,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Telefones do usuário",
+      "cardinality": 2
+    },
+    {
+      "id": 512,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Status",
+      "type": 0,
+      "data_type": 1,
+      "size": 0,
+      "is_null": false,
+      "is_unique": false,
+      "check": "status IN ('Disponível', 'Emprestado', 'Em Manutenção')",
+      "default_value": "'Disponível'",
+      "comment": "Status do exemplar",
+      "cardinality": 0
+    },
+    {
+      "id": 513,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 450,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "DataAquisicao",
+      "type": 0,
+      "data_type": 5,
+      "size": 0,
+      "is_null": false,
+      "is_unique": false,
+      "default_value": "CURRENT_DATE",
+      "comment": "Data de aquisição do exemplar",
+      "cardinality": 0
+    },
+    {
+      "id": 514,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 500,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Localizacao",
+      "type": 1,
+      "data_type": 0,
+      "size": 50,
+      "is_null": false,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Localização física do exemplar",
+      "cardinality": 0
+    },
+    {
+      "id": 515,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 550,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Nome",
+      "type": 0,
+      "data_type": 0,
+      "size": 255,
+      "is_null": false,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Nome do autor",
+      "cardinality": 0
+    },
+    {
+      "id": 516,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 600,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Nacionalidade",
+      "type": 0,
+      "data_type": 0,
+      "size": 100,
+      "is_null": true,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Nacionalidade do autor",
+      "cardinality": 0
+    },
+    {
+      "id": 517,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 650,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "DataFalecimento",
+      "type": 0,
+      "data_type": 5,
+      "size": 0,
+      "is_null": true,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Data de falecimento do autor",
+      "cardinality": 0
+    },
+    {
+      "id": 518,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 700,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Premiacoes",
+      "type": 0,
+      "data_type": 0,
+      "size": 255,
+      "is_null": true,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Premiações recebidas pelo autor",
+      "cardinality": 2
+    },
+    {
+      "id": 519,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 750,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "RazaoSocial",
+      "type": 0,
+      "data_type": 0,
+      "size": 255,
+      "is_null": false,
+      "is_unique": true,
+      "default_value": "",
+      "comment": "Razão social da editora",
+      "cardinality": 0
+    },
+    {
+      "id": 520,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 800,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "CNPJ",
+      "type": 3,
+      "data_type": 0,
+      "size": 14,
+      "is_null": false,
+      "is_unique": true,
+      "check": "LENGTH(cnpj) = 14",
+      "default_value": "",
+      "comment": "CNPJ da editora",
+      "cardinality": 0
+    },
+    {
+      "id": 521,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 850,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Endereco",
+      "type": 1,
+      "data_type": 0,
+      "size": 255,
+      "is_null": false,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Endereço da editora",
+      "cardinality": 0
+    },
+    {
+      "id": 522,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 900,
+      "posistion_y": 100,
+      "width": 100,
+      "height": 40,
+      "name": "Contatos",
+      "type": 0,
+      "data_type": 0,
+      "size": 100,
+      "is_null": true,
+      "is_unique": false,
+      "default_value": "",
+      "comment": "Contatos da editora",
+      "cardinality": 2
+    }
+  ],
+  "attribute_links": [
+    {
+      "id": 12,
+      "flow_id": "flow12",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 301,
+      "target_id": 501,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 13,
+      "flow_id": "flow13",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 301,
+      "target_id": 502,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 14,
+      "flow_id": "flow14",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 301,
+      "target_id": 503,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 15,
+      "flow_id": "flow15",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 302,
+      "target_id": 504,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 16,
+      "flow_id": "flow16",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 302,
+      "target_id": 505,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 17,
+      "flow_id": "flow17",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 303,
+      "target_id": 506,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 18,
+      "flow_id": "flow18",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 301,
+      "target_id": 507,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 19,
+      "flow_id": "flow19",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 301,
+      "target_id": 508,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 20,
+      "flow_id": "flow20",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 302,
+      "target_id": 509,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 21,
+      "flow_id": "flow21",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 302,
+      "target_id": 510,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 22,
+      "flow_id": "flow22",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 302,
+      "target_id": 511,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 23,
+      "flow_id": "flow23",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 303,
+      "target_id": 512,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 24,
+      "flow_id": "flow24",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 303,
+      "target_id": 513,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 25,
+      "flow_id": "flow25",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 303,
+      "target_id": 514,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 26,
+      "flow_id": "flow26",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 304,
+      "target_id": 515,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 27,
+      "flow_id": "flow27",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 304,
+      "target_id": 516,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 28,
+      "flow_id": "flow28",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 304,
+      "target_id": 517,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 29,
+      "flow_id": "flow29",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 304,
+      "target_id": 518,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 30,
+      "flow_id": "flow30",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 305,
+      "target_id": 519,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 31,
+      "flow_id": "flow31",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 305,
+      "target_id": 520,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 32,
+      "flow_id": "flow32",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 305,
+      "target_id": 521,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 33,
+      "flow_id": "flow33",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 305,
+      "target_id": 522,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    }
+  ],
+  "inheritances": [
+    {
+      "id": 201,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 300,
+      "width": 100,
+      "height": 60,
+      "label": "Tipo de Pessoa",
+      "disjointness": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": 101,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 150,
+      "width": 120,
+      "height": 60,
+      "label": "Pessoa Física"
+    },
+    {
+      "id": 102,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 450,
+      "width": 120,
+      "height": 60,
+      "label": "Pessoa Jurídica"
+    }
+  ],
+  "entities": [
+    {
+      "id": 301,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 200,
+      "posistion_y": 200,
+      "width": 120,
+      "height": 60,
+      "name": "Livro",
+      "is_weak": false
+    },
+    {
+      "id": 302,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 200,
+      "width": 120,
+      "height": 60,
+      "name": "Usuario",
+      "is_weak": false
+    },
+    {
+      "id": 303,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 600,
+      "posistion_y": 200,
+      "width": 120,
+      "height": 60,
+      "name": "Exemplar",
+      "is_weak": true
+    },
+    {
+      "id": 304,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 200,
+      "posistion_y": 400,
+      "width": 120,
+      "height": 60,
+      "name": "Autor",
+      "is_weak": false
+    },
+    {
+      "id": 305,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 400,
+      "width": 120,
+      "height": 60,
+      "name": "Editora",
+      "is_weak": false
     }
   ],
   "relationships": [

@@ -3,6 +3,7 @@ package main
 import (
 	"eercase/models"
 	"eercase/printer"
+	"eercase/sqlgen"
 	"encoding/json"
 	"log"
 	"os"
@@ -27,5 +28,10 @@ func main() {
 	// Imprime os detalhes do projeto usando o módulo printer
 	if err := printer.PrintProjectDetails(project); err != nil {
 		log.Fatalf("Erro ao imprimir detalhes do projeto: %v", err)
+	}
+
+	// Gera o arquivo SQL com as definições das tabelas
+	if err := sqlgen.GenerateSQL(project, "tbl_create.sql"); err != nil {
+		log.Fatalf("Erro ao gerar arquivo SQL: %v", err)
 	}
 }
