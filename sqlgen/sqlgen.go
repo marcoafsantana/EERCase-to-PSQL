@@ -27,6 +27,10 @@ func GenerateSQL(project models.Project, outputFile string) error {
 	sql.WriteString("-- Step 3: Identificação de entidades fracas (chaves compostas)\n")
 	buildWeakEntityKeys(&sql, project)
 
+	// Step 4: Para sub-entidades, adicionar colunas identificadoras do(s) super e montar PK composta
+	sql.WriteString("-- Step 4: Identificação de sub-entidades (herança)\n")
+	buildSubEntityKeys(&sql, project)
+
 	// Escreve o arquivo SQL
 	return os.WriteFile(outputFile, []byte(sql.String()), 0644)
 }
@@ -188,6 +192,104 @@ func buildWeakEntityKeys(sql *strings.Builder, project models.Project) {
 		}
 
 		// escrever ALTER TABLE ADD PRIMARY KEY (...)
+		if len(pkParts) > 0 {
+			sql.WriteString(fmt.Sprintf("ALTER TABLE \"%s\"\n", strings.ToLower(entity.Name)))
+			sql.WriteString(fmt.Sprintf("ADD PRIMARY KEY (%s);\n\n", strings.Join(pkParts, ", ")))
+		}
+	}
+}
+
+// buildSubEntityKeys adiciona colunas identificadoras dos super-entidades para cada sub-entidade e cria PK composta
+func buildSubEntityKeys(sql *strings.Builder, project models.Project) {
+	for _, entity := range project.Entities {
+		// verifica se é sub-entidade (existe um directInheritanceLink com TargetID == entity.ID)
+		var inheritanceSourceID uint
+		for _, d := range project.DirectInheritanceLinks {
+			if d.TargetID == entity.ID {
+				inheritanceSourceID = d.SourceID
+				break
+			}
+		}
+		if inheritanceSourceID == 0 {
+			continue
+		}
+
+		// encontrar outras entidades ligadas ao mesmo inheritanceSourceID (possíveis super-entidades)
+		superIdentifierAttrs := make(map[uint]nodes.Attribute)
+		for _, d := range project.DirectInheritanceLinks {
+			if d.SourceID != inheritanceSourceID {
+				continue
+			}
+			if d.TargetID == entity.ID {
+				continue
+			}
+			// d.TargetID é uma entidade relacionada à mesma herança — tratar como super-entidade
+			for _, e := range project.Entities {
+				if e.ID != d.TargetID {
+					continue
+				}
+				if e.IsWeak {
+					continue
+				}
+				// coletar atributos identificadores da entidade super
+				for _, attrLink := range project.AttributeLinks {
+					if attrLink.SourceID != e.ID {
+						continue
+					}
+					for _, attr := range project.Attributes {
+						if attr.ID != attrLink.TargetID {
+							continue
+						}
+						if attr.Type == enum.IDENTIFIER {
+							superIdentifierAttrs[attr.ID] = attr
+						}
+					}
+				}
+			}
+		}
+
+		if len(superIdentifierAttrs) == 0 {
+			continue
+		}
+
+		// preparar ADD COLUMN para cada atributo identificador do super
+		var addCols []string
+		var pkParts []string
+		for _, attr := range superIdentifierAttrs {
+			colName := fmt.Sprintf("\"%s_super_pk\"", strings.ToLower(attr.Name))
+			colType := getSQLType(attr)
+			addCols = append(addCols, fmt.Sprintf("ADD COLUMN %s %s", colName, colType))
+			pkParts = append(pkParts, colName)
+		}
+
+		// incluir identificadores próprios e discriminador da sub-entidade
+		for _, attrLink := range project.AttributeLinks {
+			if attrLink.SourceID != entity.ID {
+				continue
+			}
+			for _, attr := range project.Attributes {
+				if attr.ID != attrLink.TargetID {
+					continue
+				}
+				if attr.Type == enum.IDENTIFIER {
+					colName := fmt.Sprintf("\"%s\"", strings.ToLower(attr.Name))
+					pkParts = append(pkParts, colName)
+				}
+				if attr.Type == enum.DISCRIMINATOR {
+					colName := fmt.Sprintf("\"%s\"", strings.ToLower(attr.Name))
+					pkParts = append(pkParts, colName)
+				}
+			}
+		}
+
+		// escrever ALTER TABLE ADD COLUMN ...
+		sql.WriteString(fmt.Sprintf("ALTER TABLE \"%s\"\n", strings.ToLower(entity.Name)))
+		if len(addCols) > 0 {
+			sql.WriteString(strings.Join(addCols, ",\n"))
+			sql.WriteString(";\n\n")
+		}
+
+		// escrever ALTER TABLE ADD PRIMARY KEY (...) se existirem partes de PK
 		if len(pkParts) > 0 {
 			sql.WriteString(fmt.Sprintf("ALTER TABLE \"%s\"\n", strings.ToLower(entity.Name)))
 			sql.WriteString(fmt.Sprintf("ADD PRIMARY KEY (%s);\n\n", strings.Join(pkParts, ", ")))

@@ -39,6 +39,36 @@
       "source_handle": "bottom",
       "target_handle": "top",
       "role": "Heranca Direta"
+    },
+    {
+      "id": 4,
+      "flow_id": "flow4_inh",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 202,
+      "target_id": 302,
+      "source_handle": "bottom",
+      "target_handle": "top",
+      "role": "Heranca Usuario"
+    },
+    {
+      "id": 5,
+      "flow_id": "flow5_inh",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 202,
+      "target_id": 306,
+      "source_handle": "bottom",
+      "target_handle": "top",
+      "role": "Sub-Entidade Aluno"
+    },
+    {
+      "id": 6,
+      "flow_id": "flow6_inh",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 202,
+      "target_id": 307,
+      "source_handle": "bottom",
+      "target_handle": "top",
+      "role": "Sub-Entidade Professor"
     }
   ],
   "relationship_links": [
@@ -534,6 +564,40 @@
       "default_value": "",
       "comment": "Contatos da editora",
       "cardinality": 2
+    },
+    {
+      "id": 523,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 450,
+      "posistion_y": 150,
+      "width": 100,
+      "height": 40,
+      "name": "Matricula",
+      "type": 3,
+      "data_type": 0,
+      "size": 20,
+      "is_null": false,
+      "is_unique": true,
+      "default_value": "",
+      "comment": "Matrícula do aluno",
+      "cardinality": 0
+    },
+    {
+      "id": 524,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 650,
+      "posistion_y": 150,
+      "width": 100,
+      "height": 40,
+      "name": "Siape",
+      "type": 3,
+      "data_type": 0,
+      "size": 20,
+      "is_null": false,
+      "is_unique": true,
+      "default_value": "",
+      "comment": "SIAPE do professor",
+      "cardinality": 0
     }
   ],
   "attribute_links": [
@@ -734,6 +798,24 @@
       "target_id": 522,
       "source_handle": "top",
       "target_handle": "bottom"
+    },
+    {
+      "id": 34,
+      "flow_id": "flow34",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 306,
+      "target_id": 523,
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": 35,
+      "flow_id": "flow35",
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "source_id": 307,
+      "target_id": 524,
+      "source_handle": "top",
+      "target_handle": "bottom"
     }
   ],
   "inheritances": [
@@ -746,6 +828,16 @@
       "height": 60,
       "label": "Tipo de Pessoa",
       "disjointness": 1
+    },
+    {
+      "id": 202,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 400,
+      "posistion_y": 100,
+      "width": 140,
+      "height": 70,
+      "label": "Tipo de Usuario",
+      "disjointness": 0
     }
   ],
   "categories": [
@@ -817,6 +909,26 @@
       "width": 120,
       "height": 60,
       "name": "Editora",
+      "is_weak": false
+    },
+    {
+      "id": 306,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 450,
+      "posistion_y": 200,
+      "width": 120,
+      "height": 60,
+      "name": "Aluno",
+      "is_weak": false
+    },
+    {
+      "id": 307,
+      "project_id": "b3e1a2c4-5d6f-4a7b-8c9d-123456789abc",
+      "posistion_x": 650,
+      "posistion_y": 200,
+      "width": 120,
+      "height": 60,
+      "name": "Professor",
       "is_weak": false
     }
   ],
