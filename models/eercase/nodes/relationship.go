@@ -1,7 +1,9 @@
 package nodes
 
 import (
+	"eercase/pattern"
 	"errors"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -31,7 +33,7 @@ func (l *Relationship) SetID(id uint) {
 	l.ID = id
 }
 
-// func (l *Relationship) GetErrcaseID() string {
-// 	// Retorna o ID do link como uma string numérica
-// 	return pattern.RelationshipPrefix + strconv.FormatUint(uint64(l.ID), 10)
-// }
+func (l *Relationship) GetErrcaseID() string {
+	// Retorna o ID do link como uma string numérica
+	return pattern.RelationshipPrefix + strconv.FormatUint(uint64(l.ID), 10)
+}

@@ -1,7 +1,9 @@
 package nodes
 
 import (
+	"eercase/pattern"
 	"errors"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -30,7 +32,7 @@ func (l *Entity) SetID(id uint) {
 	l.ID = id
 }
 
-// func (l *Entity) GetErrcaseID() string {
-// 	// Retorna o ID do link como uma string numérica
-// 	return pattern.EntityPrefix + strconv.FormatUint(uint64(l.ID), 10)
-// }
+func (l *Entity) GetErrcaseID() string {
+	// Retorna o ID do link como uma string numérica
+	return pattern.EntityPrefix + strconv.FormatUint(uint64(l.ID), 10)
+}

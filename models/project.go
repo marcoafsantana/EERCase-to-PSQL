@@ -9,7 +9,7 @@ import (
 
 // Project: contém os relacionamentos com outros elementos
 type Project struct {
-	ID    uuid.UUID `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()" json:"id" validate:"required,uuid4"`
+	ID    uuid.UUID `gorm:"type:char(36);primaryKey" json:"id" validate:"required,uuid4"`
 	Title string    `gorm:"type:varchar(255);not null" json:"title" validate:"required"`
 	Owner string    `gorm:"type:varchar(255);not null;index" json:"owner" validate:"required,email"`
 

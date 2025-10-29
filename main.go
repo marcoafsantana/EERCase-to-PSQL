@@ -1,6 +1,7 @@
 package main
 
 import (
+	"eercase/dto"
 	"eercase/models"
 	"eercase/printer"
 	"eercase/sqlgen"
@@ -30,8 +31,15 @@ func main() {
 		log.Fatalf("Erro ao imprimir detalhes do projeto: %v", err)
 	}
 
-	svc := sqlgen.NewService("tbl_create.sql")
-	if err := svc.GenerateSQL(project); err != nil {
+	relations := dto.NewProjectRelationsDTOFromEntityAndPermission(&project)
+
+	if relations == nil {
+		log.Fatalf("Erro ao converter projeto para DTO de relações")
+
+	}
+
+	svc := sqlgen.NewService()
+	if err := svc.GenerateSQLToFile(*relations, "tbl_create.sql"); err != nil {
 		log.Fatalf("Erro ao gerar arquivo SQL: %v", err)
 	}
 }

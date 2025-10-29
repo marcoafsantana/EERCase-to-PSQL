@@ -1,24 +1,23 @@
 package sqlgen
 
 import (
-	"eercase/models"
+	"eercase/dto"
+	"eercase/dto/nodes"
 	"eercase/models/eercase/enum"
-	"eercase/models/eercase/nodes"
 	"fmt"
 	"os"
 	"strings"
 )
 
 type Service struct {
-	outputFile string
 }
 
-func NewService(outputFile string) *Service {
-	return &Service{outputFile: outputFile}
+func NewService() *Service {
+	return &Service{}
 }
 
 // Método no Service
-func (s *Service) GenerateSQL(project models.Project) error {
+func (s *Service) GenerateSQL(project dto.ProjectRelationsDTO) (string, error) {
 	var sql strings.Builder
 
 	sql.WriteString("-- Arquivo gerado automaticamente pelo EERCase-to-PSQL\n")
@@ -40,11 +39,19 @@ func (s *Service) GenerateSQL(project models.Project) error {
 	s.buildSubEntityKeys(&sql, project)
 
 	// Escreve o arquivo SQL
-	return os.WriteFile(s.outputFile, []byte(sql.String()), 0o644)
+	return sql.String(), nil
+}
+
+func (s *Service) GenerateSQLToFile(project dto.ProjectRelationsDTO, outputFile string) error {
+	sql, err := s.GenerateSQL(project)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(outputFile, []byte(sql), 0o644)
 }
 
 // buildCreateTables escreve as instruções CREATE TABLE no builder
-func (s *Service) buildCreateTables(sql *strings.Builder, project models.Project) {
+func (s *Service) buildCreateTables(sql *strings.Builder, project dto.ProjectRelationsDTO) {
 	for _, entity := range project.Entities {
 		sql.WriteString(fmt.Sprintf("-- Tabela %s\n", entity.Name))
 		sql.WriteString(fmt.Sprintf("CREATE TABLE \"%s\" (\n", strings.ToLower(entity.Name)))
@@ -73,7 +80,7 @@ func (s *Service) buildCreateTables(sql *strings.Builder, project models.Project
 }
 
 // buildPrimaryKeys escreve as instruções ALTER TABLE ... ADD PRIMARY KEY para cada entidade forte ou super-entidade
-func (s *Service) buildPrimaryKeys(sql *strings.Builder, project models.Project) {
+func (s *Service) buildPrimaryKeys(sql *strings.Builder, project dto.ProjectRelationsDTO) {
 	for _, entity := range project.Entities {
 		if !s.isSuperOrStrongEntity(entity, project) {
 			continue
@@ -90,7 +97,7 @@ func (s *Service) buildPrimaryKeys(sql *strings.Builder, project models.Project)
 }
 
 // buildWeakEntityKeys adiciona colunas de identificação do dono nas entidades fracas e cria PK compostas
-func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project models.Project) {
+func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project dto.ProjectRelationsDTO) {
 	for _, entity := range project.Entities {
 		if !entity.IsWeak {
 			continue
@@ -98,13 +105,13 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project models.Proje
 
 		// encontrar relationships que identificam esta entidade
 		// Para cada relationship com IsIdentifier true que conecta a entidade fraca com uma entidade forte
-		ownerIdentifierAttrs := make(map[uint]nodes.Attribute) // map[attr.ID]attr
+		ownerIdentifierAttrs := make(map[string]nodes.AttributeDTO) // map[entity.GetErrcaseID()]attr
 		for _, rel := range project.Relationships {
 			if !rel.IsIdentifier {
 				continue
 			}
 			// coletar entidades ligadas a esta relationship
-			var linkedEntityIDs []uint
+			var linkedEntityIDs []string
 			for _, rl := range project.RelationshipLinks {
 				if rl.TargetID == rel.ID {
 					linkedEntityIDs = append(linkedEntityIDs, rl.SourceID)
@@ -142,11 +149,11 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project models.Proje
 							continue
 						}
 						for _, attr := range project.Attributes {
-							if attr.ID != attrLink.TargetID {
+							if entity.ID != attrLink.TargetID {
 								continue
 							}
 							if attr.Type == enum.IDENTIFIER {
-								ownerIdentifierAttrs[attr.ID] = attr
+								ownerIdentifierAttrs[entity.ID] = attr
 							}
 						}
 					}
@@ -176,7 +183,7 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project models.Proje
 				continue
 			}
 			for _, attr := range project.Attributes {
-				if attr.ID != attrLink.TargetID {
+				if entity.ID != attrLink.TargetID {
 					continue
 				}
 				if attr.Type == enum.IDENTIFIER {
@@ -208,22 +215,22 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project models.Proje
 }
 
 // buildSubEntityKeys adiciona colunas identificadoras dos super-entidades para cada sub-entidade e cria PK composta
-func (s *Service) buildSubEntityKeys(sql *strings.Builder, project models.Project) {
+func (s *Service) buildSubEntityKeys(sql *strings.Builder, project dto.ProjectRelationsDTO) {
 	for _, entity := range project.Entities {
-		// verifica se é sub-entidade (existe um directInheritanceLink com TargetID == entity.ID)
-		var inheritanceSourceID uint
+		// verifica se é sub-entidade (existe um directInheritanceLink com TargetID == entity.GetErrcaseID())
+		var inheritanceSourceID string
 		for _, d := range project.DirectInheritanceLinks {
 			if d.TargetID == entity.ID {
 				inheritanceSourceID = d.SourceID
 				break
 			}
 		}
-		if inheritanceSourceID == 0 {
+		if inheritanceSourceID == "" {
 			continue
 		}
 
 		// encontrar outras entidades ligadas ao mesmo inheritanceSourceID (possíveis super-entidades)
-		superIdentifierAttrs := make(map[uint]nodes.Attribute)
+		superIdentifierAttrs := make(map[string]nodes.AttributeDTO)
 		for _, d := range project.DirectInheritanceLinks {
 			if d.SourceID != inheritanceSourceID {
 				continue
@@ -245,11 +252,11 @@ func (s *Service) buildSubEntityKeys(sql *strings.Builder, project models.Projec
 						continue
 					}
 					for _, attr := range project.Attributes {
-						if attr.ID != attrLink.TargetID {
+						if entity.ID != attrLink.TargetID {
 							continue
 						}
 						if attr.Type == enum.IDENTIFIER {
-							superIdentifierAttrs[attr.ID] = attr
+							superIdentifierAttrs[entity.ID] = attr
 						}
 					}
 				}
@@ -276,7 +283,7 @@ func (s *Service) buildSubEntityKeys(sql *strings.Builder, project models.Projec
 				continue
 			}
 			for _, attr := range project.Attributes {
-				if attr.ID != attrLink.TargetID {
+				if entity.ID != attrLink.TargetID {
 					continue
 				}
 				if attr.Type == enum.IDENTIFIER {
@@ -306,7 +313,7 @@ func (s *Service) buildSubEntityKeys(sql *strings.Builder, project models.Projec
 }
 
 // isSuperOrStrongEntity determina se a entidade é forte ou participa de hierarquia (super-entidade)
-func (s *Service) isSuperOrStrongEntity(entity nodes.Entity, project models.Project) bool {
+func (s *Service) isSuperOrStrongEntity(entity nodes.EntityDTO, project dto.ProjectRelationsDTO) bool {
 	if !entity.IsWeak {
 		return true
 	}
@@ -329,14 +336,14 @@ func (s *Service) isSuperOrStrongEntity(entity nodes.Entity, project models.Proj
 }
 
 // collectPKAttrs retorna a lista de nomes de colunas (entre aspas) que são do tipo IDENTIFIER para a entidade
-func (s *Service) collectPKAttrs(entity nodes.Entity, project models.Project) []string {
+func (s *Service) collectPKAttrs(entity nodes.EntityDTO, project dto.ProjectRelationsDTO) []string {
 	var pkAttrs []string
 	for _, attrLink := range project.AttributeLinks {
 		if attrLink.SourceID != entity.ID {
 			continue
 		}
 		for _, attr := range project.Attributes {
-			if attr.ID != attrLink.TargetID {
+			if entity.ID != attrLink.TargetID {
 				continue
 			}
 			if attr.Type == enum.IDENTIFIER {
@@ -348,7 +355,7 @@ func (s *Service) collectPKAttrs(entity nodes.Entity, project models.Project) []
 }
 
 // getSQLType converte o tipo de atributo EER para tipo SQL
-func (s *Service) getSQLType(attr nodes.Attribute) string {
+func (s *Service) getSQLType(attr nodes.AttributeDTO) string {
 	switch attr.DataType {
 	case enum.STRING:
 		if attr.Size > 0 {

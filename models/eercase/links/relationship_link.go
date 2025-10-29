@@ -2,6 +2,8 @@ package links
 
 import (
 	enum2 "eercase/models/eercase/enum"
+	"eercase/pattern"
+	"strconv"
 )
 
 // RelationshipLink: extende Link com participation, cardinality, role, isIdentifier e chosenLink
@@ -14,7 +16,7 @@ type RelationshipLink struct {
 	ChosenLink    bool                   `gorm:"not null" json:"chosen_link" validate:"required"`
 }
 
-// func (l *RelationshipLink) GetErrcaseID() string {
-// 	// Retorna o ID do link como uma string numérica
-// 	return pattern.RelationshipLinkPrefix + strconv.FormatUint(uint64(l.ID), 10)
-// }
+func (l *RelationshipLink) GetErrcaseID() string {
+	// Retorna o ID do link como uma string numérica
+	return pattern.RelationshipLinkPrefix + strconv.FormatUint(uint64(l.ID), 10)
+}

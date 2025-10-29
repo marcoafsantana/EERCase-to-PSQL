@@ -2,7 +2,9 @@ package nodes
 
 import (
 	"eercase/models/eercase/enum"
+	"eercase/pattern"
 	"errors"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -33,7 +35,7 @@ func (l *Inheritance) SetID(id uint) {
 	l.ID = id
 }
 
-// func (l *Inheritance) GetErrcaseID() string {
-// 	// Retorna o ID do link como uma string numérica
-// 	return pattern.InheritancePrefix + strconv.FormatUint(uint64(l.ID), 10)
-// }
+func (l *Inheritance) GetErrcaseID() string {
+	// Retorna o ID do link como uma string numérica
+	return pattern.InheritancePrefix + strconv.FormatUint(uint64(l.ID), 10)
+}

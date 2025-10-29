@@ -53,9 +53,9 @@ func printEntityDetails(entity nodes.Entity, project models.Project) {
 	fmt.Printf("   📝 Atributos:\n")
 	hasAttributes := false
 	for _, attrLink := range project.AttributeLinks {
-		if attrLink.SourceID == entity.ID {
+		if attrLink.SourceID == entity.GetErrcaseID() {
 			for _, attr := range project.Attributes {
-				if attr.ID == attrLink.TargetID {
+				if attr.GetErrcaseID() == attrLink.TargetID {
 					hasAttributes = true
 					printAttributeDetails(attr)
 				}
@@ -70,9 +70,9 @@ func printEntityDetails(entity nodes.Entity, project models.Project) {
 	fmt.Printf("\n   🔗 Relacionamentos:\n")
 	hasRelationships := false
 	for _, relLink := range project.RelationshipLinks {
-		if relLink.SourceID == entity.ID {
+		if relLink.SourceID == entity.GetErrcaseID() {
 			for _, rel := range project.Relationships {
-				if rel.ID == relLink.TargetID {
+				if rel.GetErrcaseID() == relLink.TargetID {
 					hasRelationships = true
 					// Determinar cardinalidade
 					cardinalidade := "1:1"
@@ -106,13 +106,13 @@ func printEntityDetails(entity nodes.Entity, project models.Project) {
 	fmt.Printf("\n   👨‍👦 Heranças:\n")
 	hasInheritance := false
 	for _, specLink := range project.SpecializationLinks {
-		if specLink.SourceID == entity.ID {
+		if specLink.SourceID == entity.GetErrcaseID() {
 			hasInheritance = true
 			fmt.Println("      • Especialização de outra entidade")
 		}
 	}
 	for _, genLink := range project.GeneralizationLinks {
-		if genLink.SourceID == entity.ID {
+		if genLink.SourceID == entity.GetErrcaseID() {
 			hasInheritance = true
 			completeness := "Parcial"
 			if genLink.Completeness == 1 {

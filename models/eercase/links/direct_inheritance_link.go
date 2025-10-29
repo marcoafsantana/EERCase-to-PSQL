@@ -1,6 +1,9 @@
 package links
 
-// "eercase/pattern"
+import (
+	"eercase/pattern"
+	"strconv"
+)
 
 // DirectInheritanceLink: extende Link com role
 type DirectInheritanceLink struct {
@@ -8,7 +11,7 @@ type DirectInheritanceLink struct {
 	Role string `gorm:"type:varchar(255)" json:"role"`
 }
 
-// func (l *DirectInheritanceLink) GetErrcaseID() string {
-// 	// Retorna o ID do link como uma string numérica
-// 	return pattern.DirectInheritanceLinkPrefix + strconv.FormatUint(uint64(l.ID), 10)
-// }
+func (l *DirectInheritanceLink) GetErrcaseID() string {
+	// Retorna o ID do link como uma string numérica
+	return pattern.DirectInheritanceLinkPrefix + strconv.FormatUint(uint64(l.ID), 10)
+}

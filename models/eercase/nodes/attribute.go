@@ -2,7 +2,9 @@ package nodes
 
 import (
 	enum2 "eercase/models/eercase/enum"
+	"eercase/pattern"
 	"errors"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -40,7 +42,7 @@ func (l *Attribute) SetID(id uint) {
 	l.ID = id
 }
 
-// func (l *Attribute) GetErrcaseID() string {
-// 	// Retorna o ID do link como uma string numérica
-// 	return pattern.AttributePrefix + strconv.FormatUint(uint64(l.ID), 10)
-// }
+func (l *Attribute) GetErrcaseID() string {
+	// Retorna o ID do link como uma string numérica
+	return pattern.AttributePrefix + strconv.FormatUint(uint64(l.ID), 10)
+}

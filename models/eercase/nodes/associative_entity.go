@@ -1,7 +1,9 @@
 package nodes
 
 import (
+	"eercase/pattern"
 	"errors"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -10,8 +12,8 @@ import (
 type AssociativeEntity struct {
 	Entity
 
-	RelationshipID uint         `json:"relationship_id"`
-	Relationship   Relationship `gorm:"foreignKey:RelationshipID,ProjectID;references:ID,ProjectID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL" json:"-"`
+	RelationshipID *uint         `json:"relationship_id"`
+	Relationship   *Relationship `gorm:"foreignKey:RelationshipID,ProjectID;references:ID,ProjectID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"-"`
 }
 
 func (l *AssociativeEntity) Create(db *gorm.DB) (uint, error) {
@@ -35,7 +37,7 @@ func (l *AssociativeEntity) SetID(id uint) {
 	l.ID = id
 }
 
-// func (l *AssociativeEntity) GetErrcaseID() string {
-// 	// Retorna o ID do link como uma string numérica
-// 	return pattern.AssociativeEntityPrefix + strconv.FormatUint(uint64(l.ID), 10)
-// }
+func (l *AssociativeEntity) GetErrcaseID() string {
+	// Retorna o ID do link como uma string numérica
+	return pattern.AssociativeEntityPrefix + strconv.FormatUint(uint64(l.ID), 10)
+}
