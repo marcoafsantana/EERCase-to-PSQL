@@ -30,8 +30,8 @@ func main() {
 		log.Fatalf("Erro ao imprimir detalhes do projeto: %v", err)
 	}
 
-	// Gera o arquivo SQL com as definições das tabelas
-	if err := sqlgen.GenerateSQL(project, "tbl_create.sql"); err != nil {
+	svc := sqlgen.NewService("tbl_create.sql")
+	if err := svc.GenerateSQL(project); err != nil {
 		log.Fatalf("Erro ao gerar arquivo SQL: %v", err)
 	}
 }

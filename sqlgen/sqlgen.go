@@ -9,34 +9,42 @@ import (
 	"strings"
 )
 
-// GenerateSQL gera o arquivo SQL para criar as tabelas baseadas no projeto EER
-func GenerateSQL(project models.Project, outputFile string) error {
+type Service struct {
+	outputFile string
+}
+
+func NewService(outputFile string) *Service {
+	return &Service{outputFile: outputFile}
+}
+
+// Método no Service
+func (s *Service) GenerateSQL(project models.Project) error {
 	var sql strings.Builder
 
 	sql.WriteString("-- Arquivo gerado automaticamente pelo EERCase-to-PSQL\n")
 	sql.WriteString("-- Step 1: Criação das tabelas com seus atributos\n\n")
 
-	// Passo A: cria definições das tabelas
-	buildCreateTables(&sql, project)
+	// Step 1: cria definições das tabelas
+	s.buildCreateTables(&sql, project)
 
 	// Step 2: Adicionar chaves primárias para entidades fortes ou super-entidades
 	sql.WriteString("-- Step 2: Adição das chaves primárias\n")
-	buildPrimaryKeys(&sql, project)
+	s.buildPrimaryKeys(&sql, project)
 
 	// Step 3: Para entidades fracas, adicionar colunas identificadoras do dono e montar PK composta
 	sql.WriteString("-- Step 3: Identificação de entidades fracas (chaves compostas)\n")
-	buildWeakEntityKeys(&sql, project)
+	s.buildWeakEntityKeys(&sql, project)
 
 	// Step 4: Para sub-entidades, adicionar colunas identificadoras do(s) super e montar PK composta
 	sql.WriteString("-- Step 4: Identificação de sub-entidades (herança)\n")
-	buildSubEntityKeys(&sql, project)
+	s.buildSubEntityKeys(&sql, project)
 
 	// Escreve o arquivo SQL
-	return os.WriteFile(outputFile, []byte(sql.String()), 0644)
+	return os.WriteFile(s.outputFile, []byte(sql.String()), 0o644)
 }
 
 // buildCreateTables escreve as instruções CREATE TABLE no builder
-func buildCreateTables(sql *strings.Builder, project models.Project) {
+func (s *Service) buildCreateTables(sql *strings.Builder, project models.Project) {
 	for _, entity := range project.Entities {
 		sql.WriteString(fmt.Sprintf("-- Tabela %s\n", entity.Name))
 		sql.WriteString(fmt.Sprintf("CREATE TABLE \"%s\" (\n", strings.ToLower(entity.Name)))
@@ -52,7 +60,7 @@ func buildCreateTables(sql *strings.Builder, project models.Project) {
 					continue
 				}
 				// Determina o tipo SQL e constrói a definição da coluna
-				sqlType := getSQLType(attr)
+				sqlType := s.getSQLType(attr)
 				columnDef := fmt.Sprintf("    \"%s\" %s", strings.ToLower(attr.Name), sqlType)
 				attributes = append(attributes, columnDef)
 			}
@@ -65,13 +73,13 @@ func buildCreateTables(sql *strings.Builder, project models.Project) {
 }
 
 // buildPrimaryKeys escreve as instruções ALTER TABLE ... ADD PRIMARY KEY para cada entidade forte ou super-entidade
-func buildPrimaryKeys(sql *strings.Builder, project models.Project) {
+func (s *Service) buildPrimaryKeys(sql *strings.Builder, project models.Project) {
 	for _, entity := range project.Entities {
-		if !isSuperOrStrongEntity(entity, project) {
+		if !s.isSuperOrStrongEntity(entity, project) {
 			continue
 		}
 
-		pkAttrs := collectPKAttrs(entity, project)
+		pkAttrs := s.collectPKAttrs(entity, project)
 		if len(pkAttrs) == 0 {
 			continue
 		}
@@ -82,7 +90,7 @@ func buildPrimaryKeys(sql *strings.Builder, project models.Project) {
 }
 
 // buildWeakEntityKeys adiciona colunas de identificação do dono nas entidades fracas e cria PK compostas
-func buildWeakEntityKeys(sql *strings.Builder, project models.Project) {
+func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project models.Project) {
 	for _, entity := range project.Entities {
 		if !entity.IsWeak {
 			continue
@@ -157,7 +165,7 @@ func buildWeakEntityKeys(sql *strings.Builder, project models.Project) {
 		// adicionar os atributos do dono como "nome_pk"
 		for _, attr := range ownerIdentifierAttrs {
 			colName := fmt.Sprintf("\"%s_pk\"", strings.ToLower(attr.Name))
-			colType := getSQLType(attr)
+			colType := s.getSQLType(attr)
 			addCols = append(addCols, fmt.Sprintf("ADD COLUMN %s %s", colName, colType))
 			pkParts = append(pkParts, colName)
 		}
@@ -200,7 +208,7 @@ func buildWeakEntityKeys(sql *strings.Builder, project models.Project) {
 }
 
 // buildSubEntityKeys adiciona colunas identificadoras dos super-entidades para cada sub-entidade e cria PK composta
-func buildSubEntityKeys(sql *strings.Builder, project models.Project) {
+func (s *Service) buildSubEntityKeys(sql *strings.Builder, project models.Project) {
 	for _, entity := range project.Entities {
 		// verifica se é sub-entidade (existe um directInheritanceLink com TargetID == entity.ID)
 		var inheritanceSourceID uint
@@ -257,7 +265,7 @@ func buildSubEntityKeys(sql *strings.Builder, project models.Project) {
 		var pkParts []string
 		for _, attr := range superIdentifierAttrs {
 			colName := fmt.Sprintf("\"%s_super_pk\"", strings.ToLower(attr.Name))
-			colType := getSQLType(attr)
+			colType := s.getSQLType(attr)
 			addCols = append(addCols, fmt.Sprintf("ADD COLUMN %s %s", colName, colType))
 			pkParts = append(pkParts, colName)
 		}
@@ -298,7 +306,7 @@ func buildSubEntityKeys(sql *strings.Builder, project models.Project) {
 }
 
 // isSuperOrStrongEntity determina se a entidade é forte ou participa de hierarquia (super-entidade)
-func isSuperOrStrongEntity(entity nodes.Entity, project models.Project) bool {
+func (s *Service) isSuperOrStrongEntity(entity nodes.Entity, project models.Project) bool {
 	if !entity.IsWeak {
 		return true
 	}
@@ -321,7 +329,7 @@ func isSuperOrStrongEntity(entity nodes.Entity, project models.Project) bool {
 }
 
 // collectPKAttrs retorna a lista de nomes de colunas (entre aspas) que são do tipo IDENTIFIER para a entidade
-func collectPKAttrs(entity nodes.Entity, project models.Project) []string {
+func (s *Service) collectPKAttrs(entity nodes.Entity, project models.Project) []string {
 	var pkAttrs []string
 	for _, attrLink := range project.AttributeLinks {
 		if attrLink.SourceID != entity.ID {
@@ -340,7 +348,7 @@ func collectPKAttrs(entity nodes.Entity, project models.Project) []string {
 }
 
 // getSQLType converte o tipo de atributo EER para tipo SQL
-func getSQLType(attr nodes.Attribute) string {
+func (s *Service) getSQLType(attr nodes.Attribute) string {
 	switch attr.DataType {
 	case enum.STRING:
 		if attr.Size > 0 {
