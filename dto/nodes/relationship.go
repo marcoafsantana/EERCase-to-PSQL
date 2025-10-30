@@ -10,7 +10,7 @@ import (
 // Relationship: extende Element
 type RelationshipDTO struct {
 	ElementDTO
-	IsIdentifier bool `gorm:"not null" json:"is_identifier" validate:"required"`
+	IsIdentifier bool `gorm:"not null" json:"isIdentifier" validate:"required"`
 }
 
 func (l *RelationshipDTO) ToEntity() nodes2.Relationship {

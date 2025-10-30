@@ -10,7 +10,7 @@ import (
 // Entity: extende Element
 type EntityDTO struct {
 	ElementDTO
-	IsWeak bool `gorm:"not null" json:"is_weak" validate:"required"`
+	IsWeak bool `gorm:"not null" json:"isWeak" validate:"required"`
 }
 
 func (l *EntityDTO) ToEntity() nodes2.Entity {
