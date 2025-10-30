@@ -1,11 +1,11 @@
 package printer
 
 import (
-	"eercase/models"
+	"eercase/dto"
 )
 
 // PrintProjectDetails imprime todos os detalhes do projeto de forma organizada
-func PrintProjectDetails(project models.Project) error {
+func PrintProjectDetails(project dto.ProjectRelationsDTO) error {
 	printHeader("Informações do Projeto EER")
 
 	printBasicInfo(project)

@@ -1,20 +1,18 @@
 package printer
 
 import (
-	"eercase/models"
-	"eercase/models/eercase/nodes"
+	"eercase/dto"
+	dtoNodes "eercase/dto/nodes"
 	"fmt"
 	"strings"
 )
 
-func printBasicInfo(project models.Project) {
+func printBasicInfo(project dto.ProjectRelationsDTO) {
 	fmt.Printf("📋 Detalhes Básicos:\n")
-	fmt.Printf("   • ID: %s\n", project.ID)
-	fmt.Printf("   • Título: %s\n", project.Title)
-	fmt.Printf("   • Proprietário: %s\n\n", project.Owner)
+	fmt.Printf("   • Total de elementos no modelo\n\n")
 }
 
-func printStats(project models.Project) {
+func printStats(project dto.ProjectRelationsDTO) {
 	printHeader("Estatísticas do Modelo")
 	fmt.Printf("📊 Elementos do Modelo:\n")
 	fmt.Printf("   • Entidades: %d\n", len(project.Entities))
@@ -23,7 +21,7 @@ func printStats(project models.Project) {
 	fmt.Printf("   • Entidades Associativas: %d\n", len(project.AssociativeEntities))
 }
 
-func printLinksSummary(project models.Project) {
+func printLinksSummary(project dto.ProjectRelationsDTO) {
 	fmt.Printf("\n🔗 Links e Conexões:\n")
 	fmt.Printf("   • Links de Especialização: %d\n", len(project.SpecializationLinks))
 	fmt.Printf("   • Links de Generalização: %d\n", len(project.GeneralizationLinks))
@@ -32,7 +30,7 @@ func printLinksSummary(project models.Project) {
 	fmt.Printf("   • Links de Atributos: %d\n", len(project.AttributeLinks))
 }
 
-func printEntitiesDetails(project models.Project) {
+func printEntitiesDetails(project dto.ProjectRelationsDTO) {
 	if len(project.Entities) == 0 {
 		return
 	}
@@ -43,7 +41,7 @@ func printEntitiesDetails(project models.Project) {
 	}
 }
 
-func printEntityDetails(entity nodes.Entity, project models.Project) {
+func printEntityDetails(entity dtoNodes.EntityDTO, project dto.ProjectRelationsDTO) {
 	fmt.Printf("\n🗃️  Entidade: %s\n", entity.Name)
 	if entity.IsWeak {
 		fmt.Printf("   ⚠️  Status: Entidade Fraca\n")
@@ -52,10 +50,19 @@ func printEntityDetails(entity nodes.Entity, project models.Project) {
 	// Atributos
 	fmt.Printf("   📝 Atributos:\n")
 	hasAttributes := false
+
+	// Coletar atributos herdados primeiro
+	inheritedAttrs := collectInheritedAttributesForPrint(entity, project)
+	for _, attr := range inheritedAttrs {
+		hasAttributes = true
+		printAttributeDetails(attr)
+	}
+
+	// Depois coletar atributos próprios
 	for _, attrLink := range project.AttributeLinks {
-		if attrLink.SourceID == entity.GetErrcaseID() {
+		if attrLink.SourceID == entity.ID {
 			for _, attr := range project.Attributes {
-				if attr.GetErrcaseID() == attrLink.TargetID {
+				if attr.ID == attrLink.TargetID {
 					hasAttributes = true
 					printAttributeDetails(attr)
 				}
@@ -70,9 +77,9 @@ func printEntityDetails(entity nodes.Entity, project models.Project) {
 	fmt.Printf("\n   🔗 Relacionamentos:\n")
 	hasRelationships := false
 	for _, relLink := range project.RelationshipLinks {
-		if relLink.SourceID == entity.GetErrcaseID() {
+		if relLink.SourceID == entity.ID {
 			for _, rel := range project.Relationships {
-				if rel.GetErrcaseID() == relLink.TargetID {
+				if rel.ID == relLink.TargetID {
 					hasRelationships = true
 					// Determinar cardinalidade
 					cardinalidade := "1:1"
@@ -106,13 +113,13 @@ func printEntityDetails(entity nodes.Entity, project models.Project) {
 	fmt.Printf("\n   👨‍👦 Heranças:\n")
 	hasInheritance := false
 	for _, specLink := range project.SpecializationLinks {
-		if specLink.SourceID == entity.GetErrcaseID() {
+		if specLink.SourceID == entity.ID {
 			hasInheritance = true
 			fmt.Println("      • Especialização de outra entidade")
 		}
 	}
 	for _, genLink := range project.GeneralizationLinks {
-		if genLink.SourceID == entity.GetErrcaseID() {
+		if genLink.SourceID == entity.ID {
 			hasInheritance = true
 			completeness := "Parcial"
 			if genLink.Completeness == 1 {
@@ -128,7 +135,54 @@ func printEntityDetails(entity nodes.Entity, project models.Project) {
 	fmt.Println() // Linha em branco entre entidades
 }
 
-func printAttributeDetails(attr nodes.Attribute) {
+// collectInheritedAttributesForPrint coleta atributos herdados para impressão
+func collectInheritedAttributesForPrint(entity dtoNodes.EntityDTO, project dto.ProjectRelationsDTO) []dtoNodes.AttributeDTO {
+	var inheritedAttrs []dtoNodes.AttributeDTO
+
+	// Verificar se a entidade é uma especialização
+	var inheritanceNodeID string
+	for _, specLink := range project.SpecializationLinks {
+		if specLink.SourceID == entity.ID {
+			inheritanceNodeID = specLink.TargetID
+			break
+		}
+	}
+
+	if inheritanceNodeID == "" {
+		return inheritedAttrs
+	}
+
+	// Encontrar a entidade pai através do generalization_link
+	var parentEntityID string
+	for _, genLink := range project.GeneralizationLinks {
+		if genLink.TargetID == inheritanceNodeID {
+			parentEntityID = genLink.SourceID
+			break
+		}
+	}
+
+	// Não herdar de si mesmo
+	if parentEntityID == "" || parentEntityID == entity.ID {
+		return inheritedAttrs
+	}
+
+	// Coletar os atributos da entidade pai
+	for _, attrLink := range project.AttributeLinks {
+		if attrLink.SourceID != parentEntityID {
+			continue
+		}
+		for _, attr := range project.Attributes {
+			if attr.ID != attrLink.TargetID {
+				continue
+			}
+			inheritedAttrs = append(inheritedAttrs, attr)
+		}
+	}
+
+	return inheritedAttrs
+}
+
+func printAttributeDetails(attr dtoNodes.AttributeDTO) {
 	// Determinar o tipo do atributo
 	attrType := "Comum"
 	switch attr.Type {
@@ -214,7 +268,7 @@ func printAttributeDetails(attr nodes.Attribute) {
 	}
 }
 
-func printRelationships(project models.Project) {
+func printRelationships(project dto.ProjectRelationsDTO) {
 	if len(project.Relationships) == 0 {
 		return
 	}
@@ -224,7 +278,7 @@ func printRelationships(project models.Project) {
 	}
 }
 
-func printAssociativeEntities(project models.Project) {
+func printAssociativeEntities(project dto.ProjectRelationsDTO) {
 	if len(project.AssociativeEntities) == 0 {
 		return
 	}

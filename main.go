@@ -24,9 +24,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("Erro ao fazer unmarshal do JSON: %v", err)
 	}
-	relations := project.ToProjectEntity()
+
 	// Imprime os detalhes do projeto usando o módulo printer
-	if err := printer.PrintProjectDetails(*relations); err != nil {
+	if err := printer.PrintProjectDetails(project); err != nil {
 		log.Fatalf("Erro ao imprimir detalhes do projeto: %v", err)
 	}
 
