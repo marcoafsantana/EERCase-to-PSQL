@@ -58,6 +58,16 @@ func (s *Service) buildCreateTables(sql *strings.Builder, project dto.ProjectRel
 
 		// Encontra os atributos desta entidade
 		var attributes []string
+
+		// Adicionar atributos herdados (se a entidade for sub-entidade)
+		inheritedAttrs := s.collectInheritedAttributes(entity, project)
+		for _, attr := range inheritedAttrs {
+			sqlType := s.getSQLType(attr)
+			columnDef := fmt.Sprintf("    \"%s\" %s", strings.ToLower(attr.Name), sqlType)
+			attributes = append(attributes, columnDef)
+		}
+
+		// Adicionar atributos próprios da entidade
 		for _, attrLink := range project.AttributeLinks {
 			if attrLink.SourceID != entity.ID {
 				continue
@@ -126,6 +136,7 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project dto.ProjectR
 					break
 				}
 			}
+
 			if !participates {
 				continue
 			}
@@ -143,18 +154,11 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project dto.ProjectR
 					if e.IsWeak {
 						continue
 					}
-					// coletar atributos identificadores da entidade forte
-					for _, attrLink := range project.AttributeLinks {
-						if attrLink.SourceID != e.ID {
-							continue
-						}
-						for _, attr := range project.Attributes {
-							if attr.ID != attrLink.TargetID {
-								continue
-							}
-							if attr.Type == enum.IDENTIFIER {
-								ownerIdentifierAttrs[attr.ID] = attr
-							}
+					// coletar atributos identificadores da entidade forte (próprios + herdados)
+					allAttrs := s.collectAllAttributes(e, project)
+					for _, attr := range allAttrs {
+						if attr.Type == enum.IDENTIFIER {
+							ownerIdentifierAttrs[attr.ID] = attr
 						}
 					}
 				}
@@ -338,21 +342,91 @@ func (s *Service) isSuperOrStrongEntity(entity nodes.EntityDTO, project dto.Proj
 // collectPKAttrs retorna a lista de nomes de colunas (entre aspas) que são do tipo IDENTIFIER para a entidade
 func (s *Service) collectPKAttrs(entity nodes.EntityDTO, project dto.ProjectRelationsDTO) []string {
 	var pkAttrs []string
+
+	// Coletar todos os atributos (próprios + herdados)
+	allAttrs := s.collectAllAttributes(entity, project)
+
+	for _, attr := range allAttrs {
+		if attr.Type == enum.IDENTIFIER {
+			pkAttrs = append(pkAttrs, fmt.Sprintf("\"%s\"", strings.ToLower(attr.Name)))
+		}
+	}
+
+	return pkAttrs
+}
+
+// collectInheritedAttributes coleta todos os atributos herdados de entidades pai através de hierarquia
+func (s *Service) collectInheritedAttributes(entity nodes.EntityDTO, project dto.ProjectRelationsDTO) []nodes.AttributeDTO {
+	var inheritedAttrs []nodes.AttributeDTO
+
+	// Verificar se a entidade é uma especialização (sub-entidade)
+	// Procurar por specialization_links onde source_id é a entidade atual
+	var inheritanceNodeID string
+	for _, specLink := range project.SpecializationLinks {
+		if specLink.SourceID == entity.ID {
+			// specLink.TargetID é o nó de herança
+			inheritanceNodeID = specLink.TargetID
+			break
+		}
+	}
+
+	if inheritanceNodeID == "" {
+		return inheritedAttrs
+	}
+
+	// Encontrar a entidade pai através do generalization_link
+	// O generalization_link conecta a entidade pai ao nó de herança
+	var parentEntityID string
+	for _, genLink := range project.GeneralizationLinks {
+		if genLink.TargetID == inheritanceNodeID {
+			// genLink.SourceID é a entidade pai
+			parentEntityID = genLink.SourceID
+			break
+		}
+	}
+
+	if parentEntityID == "" {
+		return inheritedAttrs
+	}
+
+	// Coletar os atributos da entidade pai
 	for _, attrLink := range project.AttributeLinks {
-		if attrLink.SourceID != entity.ID {
+		if attrLink.SourceID != parentEntityID {
 			continue
 		}
-		// coletar atributos da entidade
 		for _, attr := range project.Attributes {
 			if attr.ID != attrLink.TargetID {
 				continue
 			}
-			if attr.Type == enum.IDENTIFIER {
-				pkAttrs = append(pkAttrs, fmt.Sprintf("\"%s\"", strings.ToLower(attr.Name)))
-			}
+			inheritedAttrs = append(inheritedAttrs, attr)
 		}
 	}
-	return pkAttrs
+
+	return inheritedAttrs
+}
+
+// collectAllAttributes coleta todos os atributos de uma entidade (próprios + herdados)
+func (s *Service) collectAllAttributes(entity nodes.EntityDTO, project dto.ProjectRelationsDTO) []nodes.AttributeDTO {
+	var allAttrs []nodes.AttributeDTO
+
+	// Primeiro, adicionar atributos herdados
+	inheritedAttrs := s.collectInheritedAttributes(entity, project)
+	allAttrs = append(allAttrs, inheritedAttrs...)
+
+	// Depois, adicionar atributos próprios
+	for _, attrLink := range project.AttributeLinks {
+		if attrLink.SourceID != entity.ID {
+			continue
+		}
+		for _, attr := range project.Attributes {
+			if attr.ID != attrLink.TargetID {
+				continue
+			}
+			allAttrs = append(allAttrs, attr)
+		}
+	}
+
+	return allAttrs
 }
 
 // getSQLType converte o tipo de atributo EER para tipo SQL

@@ -1,174 +1,516 @@
 {
-   "specialization_links":[
-      
-   ],
-   "generalization_links":[
-      
-   ],
-   "direct_inheritance_links":[
-      
-   ],
-   "attribute_links":[
-      {
-         "id":"dbattrLink3",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "source_id":"dbent8",
-         "target_id":"dbattr5",
-         "source_handle":"top",
-         "target_handle":"bottom"
-      },
-      {
-         "id":"dbattrLink4",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "source_id":"dbent9",
-         "target_id":"dbattr6",
-         "source_handle":"right",
-         "target_handle":"left"
-      }
-   ],
-   "relationship_links":[
-      {
-         "role":"",
-         "participation":0,
-         "cardinality":1,
-         "is_identifier":false,
-         "chosen_link":false,
-         "id":"dbrelLink18",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "source_id":"dbent8",
-         "target_id":"dbrel9",
-         "source_handle":"right",
-         "target_handle":"left"
-      },
-      {
-         "role":"",
-         "participation":0,
-         "cardinality":1,
-         "is_identifier":false,
-         "chosen_link":false,
-         "id":"dbrelLink19",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "source_id":"dbent9",
-         "target_id":"dbrel9",
-         "source_handle":"top",
-         "target_handle":"bottom"
-      },
-      {
-         "role":"",
-         "participation":0,
-         "cardinality":0,
-         "is_identifier":false,
-         "chosen_link":false,
-         "id":"dbrelLink20",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "source_id":"dbent8",
-         "target_id":"dbrel10",
-         "source_handle":"bottom",
-         "target_handle":"top"
-      },
-      {
-         "role":"",
-         "participation":1,
-         "cardinality":1,
-         "is_identifier":true,
-         "chosen_link":false,
-         "id":"dbrelLink21",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "source_id":"dbent9",
-         "target_id":"dbrel10",
-         "source_handle":"left",
-         "target_handle":"right"
-      }
-   ],
-   "inheritances":[
-      
-   ],
-   "categories":[
-      
-   ],
-   "entities":[
-      {
-         "isWeak":false,
-         "name":"user",
-         "id":"dbent8",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "position_x":760,
-         "position_y":385,
-         "width":150,
-         "height":75
-      },
-      {
-         "isWeak":true,
-         "name":"organization",
-         "id":"dbent9",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "position_x":1155,
-         "position_y":615,
-         "width":150,
-         "height":75
-      }
-   ],
-   "attributes":[
-      {
-         "id":"dbattr5",
-         "is_null":false,
-         "is_unique":false,
-         "name":"id",
-         "size":16,
-         "type":3,
-         "data_type":0,
-         "check":"",
-         "default_value":"",
-         "comment":"",
-         "cardinality":1,
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "position_x":755,
-         "position_y":260,
-         "width":150,
-         "height":75
-      },
-      {
-         "id":"dbattr6",
-         "is_null":false,
-         "is_unique":false,
-         "name":"id",
-         "size":16,
-         "type":4,
-         "data_type":0,
-         "check":"",
-         "default_value":"",
-         "comment":"",
-         "cardinality":1,
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "position_x":1380,
-         "position_y":485,
-         "width":150,
-         "height":75
-      }
-   ],
-   "relationships":[
-      {
-         "isIdentifier":false,
-         "name":"participa",
-         "id":"dbrel9",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "position_x":1155,
-         "position_y":385,
-         "width":150,
-         "height":75
-      },
-      {
-         "isIdentifier":true,
-         "name":"coordena",
-         "id":"dbrel10",
-         "project_id":"91bf16ad-46b6-4a29-be79-c4c04c712de9",
-         "position_x":760,
-         "position_y":615,
-         "width":150,
-         "height":75
-      }
-   ],
-   "associative_entities":[
-      
-   ]
+  "specialization_links": [
+    {
+      "role": "",
+      "type": 1,
+      "id": "BS1761855557640PI",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "RI1761855429887MQ",
+      "target_id": "GW1761855534875PN",
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "role": "",
+      "type": 1,
+      "id": "ZN1761855561488SE",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "AD1761855450603GZ",
+      "target_id": "GW1761855534875PN",
+      "source_handle": "top",
+      "target_handle": "bottom"
+    }
+  ],
+  "generalization_links": [
+    {
+      "role": "",
+      "completeness": 0,
+      "type": 1,
+      "id": "BS1761855569689ES",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "EU1761853905345MF",
+      "target_id": "GW1761855534875PN",
+      "source_handle": "bottom",
+      "target_handle": "top"
+    }
+  ],
+  "direct_inheritance_links": [],
+  "attribute_links": [
+    {
+      "id": "XF1761854016065TO",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "EU1761853905345MF",
+      "target_id": "BQ1761853908530QM",
+      "source_handle": "left",
+      "target_handle": "right"
+    },
+    {
+      "id": "BM1761854048232UY",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "CA1761853980431JU",
+      "target_id": "GV1761854045785XK",
+      "source_handle": "bottom",
+      "target_handle": "top"
+    },
+    {
+      "id": "XG1761854064533TO",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "WZ1761853916111TT",
+      "target_id": "VC1761854054268JF",
+      "source_handle": "bottom",
+      "target_handle": "bottom"
+    },
+    {
+      "id": "PD1761854530655MD",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "WZ1761853916111TT",
+      "target_id": "OF1761854520572YO",
+      "source_handle": "top",
+      "target_handle": "top"
+    },
+    {
+      "id": "PK1761854712577WG",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "XV1761854628793GJ",
+      "target_id": "HN1761854686446GA",
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "id": "YW1761855406066QR",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "EU1761853905345MF",
+      "target_id": "QX1761854425435PY",
+      "source_handle": "left",
+      "target_handle": "right"
+    },
+    {
+      "id": "TS1761855409934WZ",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "EU1761853905345MF",
+      "target_id": "RB1761854426202OS",
+      "source_handle": "left",
+      "target_handle": "right"
+    },
+    {
+      "id": "GN1761855625192OT",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "RI1761855429887MQ",
+      "target_id": "FD1761855574575GD",
+      "source_handle": "bottom",
+      "target_handle": "top"
+    },
+    {
+      "id": "PJ1761855629675WM",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "AD1761855450603GZ",
+      "target_id": "IB1761855575208SR",
+      "source_handle": "bottom",
+      "target_handle": "top"
+    },
+    {
+      "id": "JG1761855870067VL",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "NW1761855670612XK",
+      "target_id": "KX1761855821986IB",
+      "source_handle": "bottom",
+      "target_handle": "top"
+    },
+    {
+      "id": "FI1761855872234RA",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "NW1761855670612XK",
+      "target_id": "OK1761855795900VG",
+      "source_handle": "bottom",
+      "target_handle": "top"
+    }
+  ],
+  "relationship_links": [
+    {
+      "role": "",
+      "participation": 0,
+      "cardinality": 1,
+      "is_identifier": false,
+      "chosen_link": false,
+      "id": "YI1761854373515XX",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "EU1761853905345MF",
+      "target_id": "TN1761854361366FR",
+      "source_handle": "right",
+      "target_handle": "left"
+    },
+    {
+      "role": "",
+      "participation": 0,
+      "cardinality": 1,
+      "is_identifier": false,
+      "chosen_link": false,
+      "id": "VL1761854380181QQ",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "CA1761853980431JU",
+      "target_id": "TN1761854361366FR",
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "role": "",
+      "participation": 0,
+      "cardinality": 1,
+      "is_identifier": false,
+      "chosen_link": false,
+      "id": "SI1761854661742NW",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "EU1761853905345MF",
+      "target_id": "XV1761854628793GJ",
+      "source_handle": "right",
+      "target_handle": "left"
+    },
+    {
+      "role": "",
+      "participation": 0,
+      "cardinality": 1,
+      "is_identifier": false,
+      "chosen_link": false,
+      "id": "XY1761854668991IL",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "CA1761853980431JU",
+      "target_id": "XV1761854628793GJ",
+      "source_handle": "top",
+      "target_handle": "bottom"
+    },
+    {
+      "role": "",
+      "participation": 0,
+      "cardinality": 0,
+      "is_identifier": false,
+      "chosen_link": false,
+      "id": "RS1761855711929MO",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "RI1761855429887MQ",
+      "target_id": "CE1761855686247OE",
+      "source_handle": "left",
+      "target_handle": "right"
+    },
+    {
+      "role": "",
+      "participation": 1,
+      "cardinality": 1,
+      "is_identifier": true,
+      "chosen_link": false,
+      "id": "DD1761855736630SN",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "source_id": "NW1761855670612XK",
+      "target_id": "CE1761855686247OE",
+      "source_handle": "right",
+      "target_handle": "left"
+    }
+  ],
+  "inheritances": [
+    {
+      "label": "",
+      "disjointness": 1,
+      "id": "GW1761855534875PN",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 265,
+      "position_y": 425,
+      "width": 80,
+      "height": 80
+    }
+  ],
+  "categories": [],
+  "entities": [
+    {
+      "is_weak": false,
+      "name": "User",
+      "id": "EU1761853905345MF",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 230,
+      "position_y": 265,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "is_weak": false,
+      "name": "Registro de Like",
+      "id": "WZ1761853916111TT",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 1120,
+      "position_y": 460,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "is_weak": false,
+      "name": "Post",
+      "id": "CA1761853980431JU",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 870,
+      "position_y": 510,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "is_weak": false,
+      "name": "Funcionario",
+      "id": "RI1761855429887MQ",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -70,
+      "position_y": 575,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "is_weak": false,
+      "name": "Cliente",
+      "id": "AD1761855450603GZ",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 360,
+      "position_y": 585,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "is_weak": true,
+      "name": "Dependente",
+      "id": "NW1761855670612XK",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -525,
+      "position_y": 575,
+      "width": 150,
+      "height": 75
+    }
+  ],
+  "attributes": [
+    {
+      "id": "BQ1761853908530QM",
+      "is_null": false,
+      "is_unique": true,
+      "name": "ID",
+      "size": 16,
+      "type": 3,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -75,
+      "position_y": 175,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "GV1761854045785XK",
+      "is_null": false,
+      "is_unique": true,
+      "name": "ID",
+      "size": 16,
+      "type": 3,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 890,
+      "position_y": 670,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "VC1761854054268JF",
+      "is_null": false,
+      "is_unique": true,
+      "name": "ID",
+      "size": 16,
+      "type": 3,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 1080,
+      "position_y": 695,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "QX1761854425435PY",
+      "is_null": false,
+      "is_unique": false,
+      "name": "Senha",
+      "size": 16,
+      "type": 0,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -75,
+      "position_y": 350,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "RB1761854426202OS",
+      "is_null": false,
+      "is_unique": false,
+      "name": "Nome",
+      "size": 16,
+      "type": 0,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -75,
+      "position_y": 260,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "OF1761854520572YO",
+      "is_null": false,
+      "is_unique": false,
+      "name": "Data",
+      "size": 16,
+      "type": 0,
+      "data_type": 2,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 1195,
+      "position_y": 300,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "HN1761854686446GA",
+      "is_null": false,
+      "is_unique": false,
+      "name": "Data",
+      "size": 16,
+      "type": 0,
+      "data_type": 2,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 870,
+      "position_y": 65,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "FD1761855574575GD",
+      "is_null": false,
+      "is_unique": false,
+      "name": "Salário",
+      "size": 16,
+      "type": 0,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -70,
+      "position_y": 720,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "IB1761855575208SR",
+      "is_null": false,
+      "is_unique": false,
+      "name": "Email",
+      "size": 16,
+      "type": 0,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 360,
+      "position_y": 720,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "OK1761855795900VG",
+      "is_null": false,
+      "is_unique": false,
+      "name": "Nome_dependente",
+      "size": 16,
+      "type": 0,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -635,
+      "position_y": 720,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "id": "KX1761855821986IB",
+      "is_null": false,
+      "is_unique": true,
+      "name": "CPF",
+      "size": 16,
+      "type": 4,
+      "data_type": 0,
+      "check": "",
+      "default_value": "",
+      "comment": "",
+      "cardinality": 1,
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -440,
+      "position_y": 720,
+      "width": 150,
+      "height": 75
+    }
+  ],
+  "relationships": [
+    {
+      "is_identifier": false,
+      "name": "Cria",
+      "id": "TN1761854361366FR",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 470,
+      "position_y": 310,
+      "width": 150,
+      "height": 75
+    },
+    {
+      "is_identifier": false,
+      "name": "Curte",
+      "id": "XV1761854628793GJ",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": 980,
+      "position_y": 206,
+      "width": 128,
+      "height": 64
+    },
+    {
+      "is_identifier": true,
+      "name": "Tem_Dependente",
+      "id": "CE1761855686247OE",
+      "project_id": "22df3c99-c36f-4ec0-b8cc-f65e25a61c11",
+      "position_x": -280,
+      "position_y": 575,
+      "width": 150,
+      "height": 75
+    }
+  ],
+  "associative_entities": []
 }
