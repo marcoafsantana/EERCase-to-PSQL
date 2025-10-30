@@ -65,3 +65,49 @@ func NewProjectRelationsDTOFromEntityAndPermission(project *models.Project) *Pro
 
 	return dto
 }
+
+func (dto *ProjectRelationsDTO) ToProjectEntity() *models.Project {
+	project := &models.Project{}
+	nodeMap := make(map[string]string)
+
+	for _, link := range dto.SpecializationLinks {
+		project.SpecializationLinks = append(project.SpecializationLinks, link.ToEntity(nodeMap))
+	}
+
+	for _, link := range dto.GeneralizationLinks {
+		project.GeneralizationLinks = append(project.GeneralizationLinks, link.ToEntity(nodeMap))
+	}
+
+	for _, link := range dto.DirectInheritanceLinks {
+		project.DirectInheritanceLinks = append(project.DirectInheritanceLinks, link.ToEntity(nodeMap))
+	}
+
+	for _, link := range dto.AttributeLinks {
+		project.AttributeLinks = append(project.AttributeLinks, link.ToEntity(nodeMap))
+	}
+
+	for _, link := range dto.RelationshipLinks {
+		project.RelationshipLinks = append(project.RelationshipLinks, link.ToEntity(nodeMap))
+	}
+
+	for _, inh := range dto.Inheritances {
+		project.Inheritances = append(project.Inheritances, inh.ToEntity())
+	}
+	for _, cat := range dto.Categories {
+		project.Categories = append(project.Categories, cat.ToEntity())
+	}
+	for _, ent := range dto.Entities {
+		project.Entities = append(project.Entities, ent.ToEntity())
+	}
+	for _, attr := range dto.Attributes {
+		project.Attributes = append(project.Attributes, attr.ToEntity())
+	}
+	for _, rel := range dto.Relationships {
+		project.Relationships = append(project.Relationships, rel.ToEntity())
+	}
+	for _, assoc := range dto.AssociativeEntities {
+		project.AssociativeEntities = append(project.AssociativeEntities, assoc.ToEntity(nodeMap))
+	}
+
+	return project
+}

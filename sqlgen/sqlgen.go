@@ -105,7 +105,7 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project dto.ProjectR
 
 		// encontrar relationships que identificam esta entidade
 		// Para cada relationship com IsIdentifier true que conecta a entidade fraca com uma entidade forte
-		ownerIdentifierAttrs := make(map[string]nodes.AttributeDTO) // map[entity.GetErrcaseID()]attr
+		ownerIdentifierAttrs := make(map[string]nodes.AttributeDTO)
 		for _, rel := range project.Relationships {
 			if !rel.IsIdentifier {
 				continue
@@ -149,11 +149,11 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project dto.ProjectR
 							continue
 						}
 						for _, attr := range project.Attributes {
-							if entity.ID != attrLink.TargetID {
+							if attr.ID != attrLink.TargetID {
 								continue
 							}
 							if attr.Type == enum.IDENTIFIER {
-								ownerIdentifierAttrs[entity.ID] = attr
+								ownerIdentifierAttrs[attr.ID] = attr
 							}
 						}
 					}
@@ -183,7 +183,7 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project dto.ProjectR
 				continue
 			}
 			for _, attr := range project.Attributes {
-				if entity.ID != attrLink.TargetID {
+				if attr.ID != attrLink.TargetID {
 					continue
 				}
 				if attr.Type == enum.IDENTIFIER {
@@ -217,7 +217,7 @@ func (s *Service) buildWeakEntityKeys(sql *strings.Builder, project dto.ProjectR
 // buildSubEntityKeys adiciona colunas identificadoras dos super-entidades para cada sub-entidade e cria PK composta
 func (s *Service) buildSubEntityKeys(sql *strings.Builder, project dto.ProjectRelationsDTO) {
 	for _, entity := range project.Entities {
-		// verifica se é sub-entidade (existe um directInheritanceLink com TargetID == entity.GetErrcaseID())
+		// verifica se é sub-entidade (existe um directInheritanceLink com TargetID == entity.ID)
 		var inheritanceSourceID string
 		for _, d := range project.DirectInheritanceLinks {
 			if d.TargetID == entity.ID {
@@ -252,11 +252,11 @@ func (s *Service) buildSubEntityKeys(sql *strings.Builder, project dto.ProjectRe
 						continue
 					}
 					for _, attr := range project.Attributes {
-						if entity.ID != attrLink.TargetID {
+						if attr.ID != attrLink.TargetID {
 							continue
 						}
 						if attr.Type == enum.IDENTIFIER {
-							superIdentifierAttrs[entity.ID] = attr
+							superIdentifierAttrs[attr.ID] = attr
 						}
 					}
 				}
@@ -283,7 +283,7 @@ func (s *Service) buildSubEntityKeys(sql *strings.Builder, project dto.ProjectRe
 				continue
 			}
 			for _, attr := range project.Attributes {
-				if entity.ID != attrLink.TargetID {
+				if attr.ID != attrLink.TargetID {
 					continue
 				}
 				if attr.Type == enum.IDENTIFIER {
@@ -342,8 +342,9 @@ func (s *Service) collectPKAttrs(entity nodes.EntityDTO, project dto.ProjectRela
 		if attrLink.SourceID != entity.ID {
 			continue
 		}
+		// coletar atributos da entidade
 		for _, attr := range project.Attributes {
-			if entity.ID != attrLink.TargetID {
+			if attr.ID != attrLink.TargetID {
 				continue
 			}
 			if attr.Type == enum.IDENTIFIER {
